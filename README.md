@@ -19,4 +19,11 @@ a supper light key value storage database in json file provides ACID transcation
 
 ``` kvj.write('YOUR_KEY', 'YOUR_VALUE') ```
 
+# Feature to come
+user defined storage directory
+
+inspect keys in database
+
+list all databases' names
+
 

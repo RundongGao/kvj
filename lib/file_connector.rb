@@ -1,26 +1,35 @@
 require 'json'
 require 'pry'
 require 'fileutils'
+require_relative 'lock_manager'
 
-# this version does not have any locks
-# figure out locks later
 class FileConnector
+  include LockManager
+
+  def self.list
+    # list all json files
+  end
+
   def initialize(name, directory = nil)
-    @file_path = directory.to_s + name.to_s + '.json'
+    @file_path = 'data/' + directory.to_s + '/' + name.to_s + '.json'
+    create_file unless if_exist
+    @file = File.open(@file_path, File::RDWR)
   end
 
   def read
-    return unless if_exist
     file = File.read(@file_path)
     JSON.parse(file)
   end
 
   def write(hash)
-    create_directory unless if_exist
     File.open(@file_path, 'w') do |f|
       f.write(hash.to_json)
     end
     read
+  end
+
+  def inspect
+    # inspect key values
   end
 
   private
@@ -29,8 +38,13 @@ class FileConnector
     File.file?(@file_path)
   end
 
-  def create_directory
+  def create_file
+    # creat directory
     dirname = File.dirname(@file_path)
     FileUtils.mkdir_p(dirname) unless File.directory?(dirname)
+    # create empty json file
+    File.open(@file_path, 'w') do |f|
+      f.write({}.to_json)
+    end
   end
 end

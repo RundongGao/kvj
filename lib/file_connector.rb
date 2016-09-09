@@ -6,12 +6,8 @@ require_relative 'lock_manager'
 class FileConnector
   include LockManager
 
-  def self.list
-    # list all json files
-  end
-
-  def initialize(name, directory = nil)
-    @file_path = 'data/' + directory.to_s + '/' + name.to_s + '.json'
+  def initialize(name, directory)
+    @file_path = directory + '/' + name.to_s + '.json'
     create_file unless if_exist
     @file = File.open(@file_path, File::RDWR)
   end

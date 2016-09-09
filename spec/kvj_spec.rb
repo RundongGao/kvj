@@ -1,6 +1,6 @@
-require_relative '../jbase'
+require_relative '../kvj'
 
-describe JBase do
+describe KVJ do
   it 'write data to file'
   it 'read data from file'
 end

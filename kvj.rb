@@ -1,10 +1,15 @@
 require_relative 'lib/file_connector'
+require_relative 'lib/base_manager'
 require 'pry'
 
-class JBase
-  def initialize(name, directory = nil)
+class KVJ
+  extend BaseManager
+
+  def initialize(name, directory = 'data')
     @file_connector = FileConnector.new(name, directory)
   end
+
+  alias connect initialize
 
   def write(key, value)
     @file_connector.grab_ex_lock
@@ -21,4 +26,7 @@ class JBase
   ensure
     @file_connector.release_lock
   end
+
+  alias [] read
+  alias []= write
 end

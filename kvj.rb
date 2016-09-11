@@ -1,15 +1,15 @@
 require_relative 'lib/file_connector'
 require_relative 'lib/base_manager'
 require 'pry'
+require 'yaml'
 
 class KVJ
   extend BaseManager
 
-  def initialize(name, directory = 'data')
+  def initialize(name)
+    directory = YAML.load_file('config.yml')['base_directory']
     @file_connector = FileConnector.new(name, directory)
   end
-
-  alias connect initialize
 
   def write(key, value)
     @file_connector.grab_ex_lock
@@ -27,6 +27,16 @@ class KVJ
     @file_connector.release_lock
   end
 
-  alias [] read
+  def inspect_keys
+    @file_connector.grab_sh_lock
+    @file_connector.read.keys
+  ensure
+    @file_connector.release_lock
+  end
+
+  class << self
+    alias connect new
+  end
   alias []= write
+  alias [] read
 end

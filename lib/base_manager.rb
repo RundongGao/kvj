@@ -1,10 +1,14 @@
+require 'pry'
 module BaseManager
-  def list(directory = 'data')
-    databases = Dir.entries(directory)
+  def list
+    base_directory = YAML.load_file('config.yml')['base_directory']
+    databases = Dir.entries(base_directory)
     databases.delete_if { |database| database =~ /^\./ }
-    databases
+    databases.map { |file_name| file_name.chomp('.json') }
   end
 
-  def drop
+  def drop(database)
+    base_directory = YAML.load_file('config.yml')['base_directory']
+    File.delete(base_directory + database + '.json')
   end
 end

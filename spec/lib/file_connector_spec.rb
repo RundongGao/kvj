@@ -4,16 +4,9 @@ describe FileConnector do
   before { allow_any_instance_of(FileConnector).to receive(:create_file) }
   before { allow(File).to receive(:open) }
   describe '.new' do
-    context 'given file name' do
-      it 'sets file_path to file name' do
-        path = FileConnector.new('some_file_name').instance_variable_get(:@file_path)
-        expect(path).to eql('data/some_file_name.json')
-      end
-    end
-
     context 'given file name and file directory' do
       it 'sets file_path to file name' do
-        path = FileConnector.new('some_file_name', 'some_direct').instance_variable_get(:@file_path)
+        path = FileConnector.new('some_file_name', 'some_direct/').instance_variable_get(:@file_path)
         expect(path).to eql('some_direct/some_file_name.json')
       end
     end
@@ -21,13 +14,13 @@ describe FileConnector do
     context 'file does not exist' do
       it 'create folder and file' do
         expect_any_instance_of(FileConnector).to receive(:create_file)
-        FileConnector.new('some_file_name', 'some_direct')
+        FileConnector.new('some_file_name', 'some_direct/')
       end
     end
   end
 
   context 'read and write' do
-    subject { FileConnector.new('some_file_name', 'some_direct') }
+    subject { FileConnector.new('some_file_name', 'some_direct/') }
     before { allow(subject).to receive(:if_exist).and_return(true) }
     describe '.read' do
       it 'reads @file_path file' do

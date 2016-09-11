@@ -7,7 +7,7 @@ class FileConnector
   include LockManager
 
   def initialize(name, directory)
-    @file_path = directory + '/' + name.to_s + '.json'
+    @file_path = directory + name.to_s + '.json'
     create_file unless if_exist
     @file = File.open(@file_path, File::RDWR)
   end
@@ -22,10 +22,6 @@ class FileConnector
       f.write(hash.to_json)
     end
     read
-  end
-
-  def inspect
-    # inspect key values
   end
 
   private

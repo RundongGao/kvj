@@ -1,10 +1,14 @@
 # kvj
-a supper light key value storage database in json file provides ACID transcation on disk for multiple programs.
+A supper light connectionless key-value storage database provides ACID transcation for multiple programs.
 rubygems : https://rubygems.org/gems/kvj
 
 # Install
 
 ```gem install kvj```
+
+Or with Bundler in your Gemfile.
+
+```gem 'kvj', :require => false```
 
 # Setup
 Create a `config/kvj_config.yml` file on root directory of your project.
@@ -44,7 +48,7 @@ Once you have a kvj object connected to your kvj database you can start to write
 
 multiple programs can read and write to the same kvj same time with ACID transications provided by kvj as long as their kvj are configed to the `base_directory`.
 
-In kvj key or value can be any of Integer, Fload, String, List or Hash.
+In kvj, your key can only be type of string and value can be any of Integer, Fload, String, List or Hash.
 
 ``` auth_list = KVJ.new('auth_list') ```
 

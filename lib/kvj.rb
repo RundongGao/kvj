@@ -36,6 +36,15 @@ class KVJ
     @file_connector.release_lock
   end
 
+  def delete(key)
+    @file_connector.grab_ex_lock
+    hash = @file_connector.read
+    hash.delete(key)
+    @file_connector.write(hash)
+  ensure
+    @file_connector.release_lock
+  end
+
   class << self
     alias connect new
   end

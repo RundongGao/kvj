@@ -1,14 +1,13 @@
 Gem::Specification.new do |s|
   s.name        = 'kvj'
-  s.version     = '0.0.1'
+  s.version     = '0.0.2'
   s.date        = '2016-09-11'
-  s.summary     = 'A supper light weight value data database.'
-  s.description = 'a supper light key value storage database in json file provides ACID transcation on disk for multiple programs.'
+  s.summary     = 'A supper light connectionless key-value storage database.'
+  s.description = 'A supper light connectionless key-value storage database provides ACID transcations for multiple programs.'
   s.authors     = ['RundongGao']
   s.email       = 'asphinx423@gmail.com'
   s.files       = ['lib/kvj.rb', 'lib/base_manager.rb', 'lib/file_connector.rb', 'lib/lock_manager.rb']
-  s.homepage    =
-    'http://rubygems.org/gems/hola'
+  s.homepage    = 'https://github.com/RundongGao/kvj'
   s.license = 'MIT'
   s.add_runtime_dependency 'json'
 end

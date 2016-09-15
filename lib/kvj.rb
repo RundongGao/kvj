@@ -3,11 +3,13 @@ require_relative 'base_manager'
 require 'pry'
 require 'yaml'
 
+CONFIG = YAML.load_file('config/kvj_config.yml')
+
 class KVJ
   extend BaseManager
 
   def initialize(name)
-    directory = YAML.load_file('config/kvj_config.yml')['base_directory']
+    directory = CONFIG['base_directory']
     @file_connector = FileConnector.new(name, directory)
   end
 

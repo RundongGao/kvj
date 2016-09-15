@@ -1,5 +1,5 @@
-require_relative 'lib/file_connector'
-require_relative 'lib/base_manager'
+require_relative 'file_connector'
+require_relative 'base_manager'
 require 'pry'
 require 'yaml'
 
@@ -7,7 +7,7 @@ class KVJ
   extend BaseManager
 
   def initialize(name)
-    directory = YAML.load_file('config.yml')['base_directory']
+    directory = YAML.load_file('config/kvj_config.yml')['base_directory']
     @file_connector = FileConnector.new(name, directory)
   end
 

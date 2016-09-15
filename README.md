@@ -1,5 +1,6 @@
 # kvj
 A supper light connectionless key-value storage database provides ACID transcation for multiple programs.
+
 rubygems : https://rubygems.org/gems/kvj
 
 # Install
@@ -15,7 +16,7 @@ Create a `config/kvj_config.yml` file on root directory of your project.
 
 And add
 
-```base_directory: 'your_data_storage_directory/```
+```base_directory: 'your_data_storage_directory/'```
 
 to the file you created.
 
@@ -67,7 +68,7 @@ to view all the keys you have in your database
 
 ```puts auth_list.inspect_keys```
 
-``` ['Tom', 'Bob', 'Michelle'] ```
+```=>  ['Tom', 'Bob', 'Michelle'] ```
 
 
 # Delete a key:
@@ -77,7 +78,7 @@ to delete a key-value pair:
 
 ```puts auth_list.inspect_keys```
 
-```['Bob', 'Michelle']```
+```=> ['Bob', 'Michelle']```
 
 
 
@@ -86,16 +87,20 @@ to delete a key-value pair:
 You can also list all databases you have under the `base_directory` you set in config file:
 
 ``` puts KVJ.list ```
+
 ``` => ['auth_list', 'test'] ```
 
 and drop a database:
 
 ``` KVJ.drop['test'] ```
+
 ``` puts KVJ.list ```
+
 ``` => ['auth_list'] ```
 
-# Feature to come
-Inheritage methods from Hash object by method missing and also type check on write in ( only object can write to json can be allowed )
+# Features to come
+Inheritage methods from Hash class by method missing and also type checks ( only objects that can  be writen to json are allowed )
+Error handling and error message
 
 
 

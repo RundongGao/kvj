@@ -8,7 +8,7 @@ class FileConnector
 
   def initialize(name, directory)
     @file_path = directory + name.to_s + '.json'
-    create_file unless if_exist
+    create_file unless FileConnector.exist(name, directory)
     @file = File.open(@file_path, File::RDWR)
   end
 
@@ -24,11 +24,12 @@ class FileConnector
     read
   end
 
-  private
-
-  def if_exist
-    File.file?(@file_path)
+  def self.exist(name, directory)
+    file_path = directory + name.to_s + '.json'
+    File.file?(file_path)
   end
+
+  private
 
   def create_file
     # creat directory

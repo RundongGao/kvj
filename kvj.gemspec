@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'kvj'
   s.version     = '0.0.2'
-  s.date        = '2016-09-11'
+  s.date        = '2016-09-19'
   s.summary     = 'A supper light connectionless key-value storage database.'
   s.description = 'A supper light connectionless key-value storage database provides ACID transcations for multiple programs.'
   s.authors     = ['RundongGao']

@@ -24,13 +24,16 @@ to the file you created.
 ## initializing
 ``` require 'kvj' ```
 
+To creata a new database:
+
 ``` kvj = KVJ.new(database_name) ```
 
-or
+To connect to existing database:
 
 ``` kvj = KVJ.connect(database_name)```
 
-This will connect to your database or create a new one if the 'database_name' doesn't exist.
+Notice that trying to create an existing database under your `base_directoy` or connecting to a non-existing one
+will cause error message and return `false`.
 
 ## read and write to kvj
 Once you have a kvj object connected to your kvj database you can start to write and read from it.
@@ -63,6 +66,10 @@ In kvj, your key can only be type of string and value can be any of Integer, Flo
 
 ``` =>  ['read', 'write', 'delete'] ```
 
+Notice that reading a non-existing exist key will cause method to return `false` and output error message.
+
+
+
 # List all keys:
 to view all the keys you have in your database
 
@@ -79,6 +86,8 @@ to delete a key-value pair:
 ```puts auth_list.inspect_keys```
 
 ```=> ['Bob', 'Michelle']```
+
+Notice that deleting a non-existing exist key will cause method to return `false` and output error message.
 
 
 

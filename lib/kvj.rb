@@ -8,16 +8,16 @@ CONFIG = YAML.load_file('config/kvj_config.yml')
 class KVJ
   extend BaseManager
 
-  def self.new(database)
+  def self.create(database)
     directory = CONFIG['base_directory']
-    return create(database, directory) unless FileConnector.exist(database, directory)
+    return new(database, directory) unless FileConnector.exist(database, directory)
     STDERR.puts "Request to initialize a new database : #{database} but alread exists. "
     false
   end
 
   def self.connect(database)
     directory = CONFIG['base_directory']
-    return create(database, directory) if FileConnector.exist(database, directory)
+    return new(database, directory) if FileConnector.exist(database, directory)
     STDERR.puts "Request to connect to database : #{database} but does not exists. "
     false
   end
@@ -61,17 +61,17 @@ class KVJ
   alias []= write
   alias [] read
 
-  private
-
   def key_exist(data, key, action)
     return true if data.key?(key)
     STDERR.puts "Request to #{action} key : '#{key}' does not exist in database : '#{@database}' "
     false
   end
-  class << self
-    def create(database, directory)
-      @database = database
-      @file_connector = FileConnector.new(database, directory)
-    end
+
+  def initialize(database, directory)
+    @database = database
+    @file_connector = FileConnector.new(database, directory)
   end
+
+  private :key_exist
+  private_class_method :new
 end

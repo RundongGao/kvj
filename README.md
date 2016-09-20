@@ -26,7 +26,7 @@ to the file you created.
 
 To creata a new database:
 
-``` kvj = KVJ.new(database_name) ```
+``` kvj = KVJ.create(database_name) ```
 
 To connect to existing database:
 

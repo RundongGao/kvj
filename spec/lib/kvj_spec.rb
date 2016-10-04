@@ -29,12 +29,6 @@ describe KVJ do
         subject['key'] = 'Value'
       end
 
-      it 'on inspect keys' do
-        expect_any_instance_of(FileConnector).to receive(:grab_sh_lock)
-        expect_any_instance_of(FileConnector).to receive(:release_lock)
-        subject.inspect_keys
-      end
-
       it 'delete key' do
         expect_any_instance_of(FileConnector).to receive(:grab_ex_lock)
         expect_any_instance_of(FileConnector).to receive(:release_lock)

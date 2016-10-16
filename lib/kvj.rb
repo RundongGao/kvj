@@ -12,6 +12,13 @@ class KVJ
   extend BaseMethods
   extend MetaHashMethods
 
+  # the new constructor is hidden from user
+  # please use connect_or_create, create or connect instead
+  def initialize(database, directory)
+    @database = database
+    @file_connector = FileConnector.new(database, directory)
+  end
+
   def self.connect_or_create(database)
     directory = KVJ_CONFIG['base_directory']
     new(database, directory)
@@ -31,60 +38,57 @@ class KVJ
     false
   end
 
-
+  # wrapper for KVJ instance methods for file locking on read
   def self.read_action(method)
+    raw_method = "raw_#{method}".to_sym  
+    alias_method raw_method, method
+
     define_method method do |*arg, &block|
       begin
         @file_connector.grab_sh_lock
         hash = @file_connector.read
-        return_value = send(method, *arg, &block)
+        return_value = send(raw_method, *arg, &block)
       ensure
         @file_connector.release_lock
       end
     end
   end
 
+  # wrapper for KVJ instance methods for file locking on write
+  def self.write_action(method)
+    raw_method = "raw_#{method}".to_sym  
+    alias_method raw_method, method
 
-
+    define_method method do |*arg, &block|
+      begin
+        @file_connector.grab_sh_lock
+        hash = @file_connector.read
+        return_value = send(raw_method, *arg, &block)
+      ensure
+        @file_connector.release_lock
+      end
+    end
+  end
 
   def load(hash)
-    begin
-      @file_connector.grab_ex_lock
-      raise 'current kvj is not empty, please truncate it first, or use the merge method' unless @file_connector.read.empty? 
-      @file_connector.write(hash)
-    ensure
-      @file_connector.release_lock
-    end
+    raise 'current kvj is not empty, please truncate it first, or use the merge method' unless @file_connector.read.empty? 
+    @file_connector.write(hash)
   end
+  write_action :load
 
   def truncate
-    begin
-      @file_connector.grab_ex_lock
-      @file_connector.write({})
-    ensure
-      @file_connector.release_lock
-    end
+    @file_connector.write({})
   end
+  write_action :truncate
 
   def dump
-    begin
-      @file_connector.grab_sh_lock
-      @file_connector.read
-    ensure
-      @file_connector.release_lock
-    end
+    @file_connector.read
   end
-
-  # the new constructor is hidden from user
-  # please use connect_or_create, create or connect instead
-  def initialize(database, directory)
-    @database = database
-    @file_connector = FileConnector.new(database, directory)
-  end
+  read_action :dump
 
   # create dynamic methods for all Hash object native method
   generate_hash_functions
-  private_class_method :new, :inheritage_hash_method, :generate_hash_functions
+  private_class_method :new, :inheritage_hash_method, :generate_hash_functions, :write_action, :read_action
 end
 
 binding.pry

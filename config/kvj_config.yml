@@ -1,1 +1,3 @@
 base_directory: 'data/'
+auto_key_casting: true
+auto_value_casting: false

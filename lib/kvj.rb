@@ -31,6 +31,50 @@ class KVJ
     false
   end
 
+
+  def self.read_action(method)
+    define_method method do |*arg, &block|
+      begin
+        @file_connector.grab_sh_lock
+        hash = @file_connector.read
+        return_value = send(method, *arg, &block)
+      ensure
+        @file_connector.release_lock
+      end
+    end
+  end
+
+
+
+
+  def load(hash)
+    begin
+      @file_connector.grab_ex_lock
+      raise 'current kvj is not empty, please truncate it first, or use the merge method' unless @file_connector.read.empty? 
+      @file_connector.write(hash)
+    ensure
+      @file_connector.release_lock
+    end
+  end
+
+  def truncate
+    begin
+      @file_connector.grab_ex_lock
+      @file_connector.write({})
+    ensure
+      @file_connector.release_lock
+    end
+  end
+
+  def dump
+    begin
+      @file_connector.grab_sh_lock
+      @file_connector.read
+    ensure
+      @file_connector.release_lock
+    end
+  end
+
   # the new constructor is hidden from user
   # please use connect_or_create, create or connect instead
   def initialize(database, directory)
@@ -42,3 +86,5 @@ class KVJ
   generate_hash_functions
   private_class_method :new, :inheritage_hash_method, :generate_hash_functions
 end
+
+binding.pry

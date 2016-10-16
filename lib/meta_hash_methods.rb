@@ -21,7 +21,6 @@ module MetaHashMethods
     methods = Hash.instance_methods - KVJ.instance_methods
     write_methods = methods.select { |method| method =~ /=|!|delete/ }
     read_only_methods = methods - write_methods
-
     read_only_methods.each do |method|
       inheritage_hash_method(method, :read)
     end

@@ -1,6 +1,5 @@
 # kvj
 A supper light connectionless key-value storage database provides ACID transcation for multiple programs.
-
 **__Using your key-value data just like using Ruby Hash.__**
 
 rubygems : https://rubygems.org/gems/kvj
@@ -40,7 +39,7 @@ will cause error message and return `false`.
 
 or use 
 
-``` kvj = KVJ.connect_or_create(database_name) ```
+``` kvj = KVJ.connect_or_create(database_name)```
 
 ## EVERY Hash method you need
 
@@ -50,7 +49,7 @@ It will behavior EXACTLY like a Hash object and only difference is all the data 
 
 For example if I am using Ruby 2.0.0 then in irb if I type 
 
-``` KVJ.instance_methods ```
+```KVJ.instance_methods```
 
 ``` => [:rehash, :to_hash, :to_h, :to_a, :[], :fetch, :store, :default, :default_proc, :key, :index, :size, :length, :empty?, :each_value, :each_key, :each_pair, :each, :keys, :values, :values_at, :shift, :keep_if, :select, :reject, :clear, :invert, :update, :replace, :merge, :assoc, :rassoc, :flatten, :include?, :member?, :has_key?, :has_value?, :key?, :value?, :compare_by_identity, :compare_by_identity?, :entries, :sort, :sort_by, :grep, :count, :find, :detect, :find_index, :find_all, :collect, :map, :flat_map, :collect_concat, :inject, :reduce, :partition, :group_by, :first, :all?, :any?, :one?, :none?, :min, :max, :minmax, :min_by, :max_by, :minmax_by, :each_with_index, :reverse_each, :each_entry, :each_slice, :each_cons, :each_with_object, :zip, :take, :take_while, :drop, :drop_while, :cycle, :chunk, :slice_before, :lazy, :[]=, :default=, :default_proc=, :delete, :delete_if, :select!, :reject!, :merge!, :pry, :__binding__, :psych_to_yaml, :to_yaml, :to_yaml_properties, :pretty_print, :pretty_print_cycle, :pretty_print_instance_variables, :pretty_print_inspect, :to_json, :nil?, :===, :=~, :!~, :eql?, :hash, :<=>, :class, :singleton_class, :clone, :dup, :taint, :tainted?, :untaint, :untrust, :untrusted?, :trust, :freeze, :frozen?, :to_s, :inspect, :methods, :singleton_methods, :protected_methods, :private_methods, :public_methods, :instance_variables, :instance_variable_get, :instance_variable_set, :instance_variable_defined?, :remove_instance_variable, :instance_of?, :kind_of?, :is_a?, :tap, :send, :public_send, :respond_to?, :extend, :display, :method, :public_method, :define_singleton_method, :object_id, :to_enum, :enum_for, :pretty_inspect, :==, :equal?, :!, :!=, :instance_eval, :instance_exec, :__send__, :__id__] ```
 
@@ -130,12 +129,12 @@ To drop a database:
 
 # Limitation
 
-Under the hood, KVJ store your data in json and which means you keys can ONLY BE A STRONG and your value can only be one of INT, FLOAT, STRING, LIST, HASH and combinations of those.
+Under the hood, KVJ store your data in json and which means you keys can ONLY BE A STRONG and your value can only be one of INT, FLOAT, STRING, LIST, HASH and combination of those.
 
 # Feature to come
-1. Add an object serializer to KVJ so more complicate objects can be stored.
-2. Authentication.
-3. RESTful API interface, KVJ as a web service.
+Add an object serializer to KVJ so more complicate objects can be stored.
+Authentication.
+RESTful API interface, KVJ as a web service.
 
 
 
